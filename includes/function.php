@@ -157,7 +157,7 @@ function user_shell($uid,$shell,$con){
   
   
   function user_check($uid,$shell,$con){
-    $sql="select * from f_user where `uid` = '$uid'";
+    $sql="select * from f_user where `ukey` = '$uid'";
     $query=mysqli_query($con,$sql);
     $us=is_array(@$row=mysqli_fetch_assoc($query));
 

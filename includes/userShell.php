@@ -6,10 +6,11 @@ if($userInfo2 == "bad"){
 	$isVisitor = "true";
 	$userInfo["uid"]="";
 	$userInfo["group"]="1";
-    echo '<script>window.location.href="views/login.php";</script>';
+    echo '<script>window.location.href="login.php";</script>';
     exit();
 }else{
 	$isVisitor = "false";
+	unset($userInfo2["pwd"]);
 	$userInfo = $userInfo2;
 
 }

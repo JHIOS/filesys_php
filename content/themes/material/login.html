@@ -113,42 +113,42 @@
 			<div class="row">
 				<div class="col-md-4 col-md-offset-4">
 					<div class="login-box">
-						<h2 class="bigintro">Register</h2>
+						<h2 class="bigintro">注册</h2>
 						<div class="divide-40"></div>
 						<form role="form">
 							<div class="form-group">
-								<label for="exampleInputName">Full Name</label>
+								<label for="username-reg">用户名</label>
 								<i class="fa fa-font"></i>
-								<input type="text" class="form-control" id="exampleInputName" >
+								<input type="text" class="form-control" id="username-reg" >
 							</div>
 							<div class="form-group">
-								<label for="exampleInputUsername">Username</label>
+								<label for="userid">用户编号</label>
 								<i class="fa fa-user"></i>
-								<input type="text" class="form-control" id="exampleInputUsername" >
+								<input type="text" class="form-control" id="userid" >
 							</div>
 							<div class="form-group">
-								<label for="exampleInputEmail1">Email address</label>
+								<label for="email">邮箱地址</label>
 								<i class="fa fa-envelope"></i>
-								<input type="email" class="form-control" id="exampleInputEmail1" >
+								<input type="email" class="form-control" id="email" >
 							</div>
 							<div class="form-group">
-								<label for="exampleInputPassword1">Password</label>
+								<label for="password-reg">密码</label>
 								<i class="fa fa-lock"></i>
-								<input type="password" class="form-control" id="exampleInputPassword1" >
+								<input type="password" class="form-control" id="password-reg" >
 							</div>
 							<div class="form-group">
-								<label for="exampleInputPassword2">Repeat Password</label>
+								<label for="repwd">确认密码</label>
 								<i class="fa fa-check-square-o"></i>
-								<input type="password" class="form-control" id="exampleInputPassword2" >
+								<input type="password" class="form-control" id="repwd" >
 							</div>
 							<div>
-								<button type="submit" class="btn btn-success">Sign Up</button>
+								<button type="button" id="regbtn" class="btn btn-success">注册</button>
 							</div>
 						</form>
 
 						<!-- /SOCIAL REGISTER -->
 						<div class="login-helpers">
-							<a href="#" onclick="swapScreen('login_bg');return false;"> Back to Login</a> <br>
+							<a href="#" onclick="swapScreen('login_bg');return false;"> 返回登录</a> <br>
 						</div>
 					</div>
 				</div>
@@ -192,10 +192,8 @@
     }
    	$(document).ready(function () {
         $('#sub').click(function () {
-
-
-            $.ajax("../includes/userAction.php", {
-                type:'POST',
+            $.ajax("includes/userAction.php", {
+                type:'GET',
                 data: {
                     action:'login',
                     username:$('#username').val(),
@@ -206,10 +204,33 @@
                 if(data.code == "bad"){
                     alert(data.message);
 				}else {
-                    window.location.href="../index.php";
+                    window.location.href="index.php";
 				}
             });
         });
+
+        $('#regbtn').click(function () {
+            $.ajax("includes/userAction.php", {
+                type:'GET',
+                data: {
+                    action:'register',
+                    username_reg:$('#username-reg').val(),
+                    password_reg:$('#password-reg').val(),
+					email:$('#email').val(),
+					uid:$('#userid').val()
+                },
+                dataType: "json"
+            }).done(function(data) {
+                if(data.code == "bad"){
+                    alert(data.message);
+                }else {
+                    window.location.href="index.php";
+                }
+            });
+        });
+
+
+
 
     });
 
