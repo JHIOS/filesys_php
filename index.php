@@ -14,8 +14,8 @@ require_once('includes/connect.php');
 require_once('includes/userShell.php');
 
 $result = mysqli_query($con,"SELECT * FROM f_setting");//获取数据
-//ini_set("display_errors", "On");
-//error_reporting(E_ALL | E_STRICT);
+ini_set("display_errors", "On");
+error_reporting(E_ALL | E_STRICT);
 while($row = mysqli_fetch_assoc($result)){ 
 	$tit = $row['main_tit'];
 	$theme = $row['theme'];
