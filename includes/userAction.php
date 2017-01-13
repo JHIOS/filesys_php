@@ -7,12 +7,13 @@ session_start();
 
 //ini_set("display_errors", "On");
 //error_reporting(E_ALL | E_STRICT);
-$action = $_GET['action'];
-if(!empty($_POST['action'])){
+$action = $_POST['action'];
+if(!empty($_GET['action'])){
 	switch ($_GET['action']) {
 		case 'logout':
 			unset($_SESSION['uid']);
    			unset($_SESSION['user_check']);
+            echo '<script>alert("注销成功");</script>';
    			echo '<script>window.history.go(-1);</script>';
 			break;
 		
@@ -145,7 +146,7 @@ switch ($action) {
 		echo userLogin($_POST['username'],$_POST['password'],$con);
 		break;
 	case 'register':
-		echo userReg($_GET['username_reg'],$_GET['password_reg'],$_GET['uid'],$_GET['email'],$con);
+		echo userReg($_POST['username_reg'],$_POST['password_reg'],$_POST['uid'],$_POST['email'],$con);
 		break;
 	case 'changepwd':
 		echo changePwd($_POST['pwd'],$con,$userInfo['pwd'],$_POST['pwdnow'],$userInfo['uid']);

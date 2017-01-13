@@ -193,7 +193,7 @@
    	$(document).ready(function () {
         $('#sub').click(function () {
             $.ajax("includes/userAction.php", {
-                type:'GET',
+                type:'POST',
                 data: {
                     action:'login',
                     username:$('#username').val(),
@@ -211,7 +211,7 @@
 
         $('#regbtn').click(function () {
             $.ajax("includes/userAction.php", {
-                type:'GET',
+                type:'POST',
                 data: {
                     action:'register',
                     username_reg:$('#username-reg').val(),
