@@ -1,9 +1,9 @@
 <!-- HEADER -->
-<header class="navbar clearfix" id="header">
+<header class="navbar clearfix navbar-fixed-top" id="header">
     <div class="container">
         <div class="navbar-brand">
             <!-- COMPANY LOGO -->
-            <a href="index.html">
+            <a href="index.php">
                 <img src="~$path~~img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
             </a>
             <!-- /COMPANY LOGO -->
@@ -24,13 +24,7 @@
         </div>
         <!-- NAVBAR LEFT -->
         <ul class="nav navbar-nav pull-left hidden-xs" id="navbar-left">
-            <li class="dropdown">
-                <a href="#" class="team-status-toggle dropdown-toggle tip-bottom" data-toggle="tooltip" title="Toggle Team View">
-                    <i class="fa fa-users"></i>
-                    <span class="name">Team Status</span>
-                    <i class="fa fa-angle-down"></i>
-                </a>
-            </li>
+
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-cog"></i>
@@ -53,6 +47,12 @@
         <!-- /NAVBAR LEFT -->
         <!-- BEGIN TOP NAVIGATION MENU -->
         <ul class="nav navbar-nav pull-right">
+            <li class="dropdown" id="header-update">
+                <a href="#" class="dropdown-toggle">
+                    <i class="fa fa-refresh"> 更新数据</i>
+                </a>
+            </li>
+
             <!-- BEGIN NOTIFICATION DROPDOWN -->
             <li class="dropdown" id="header-notification">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -155,7 +155,6 @@
                     </li>
                     <li>
                         <a href="#">
-                            <img src="img/avatars/avatar2.jpg" alt="" />
                             <span class="body">
 										<span class="from">Jane Doe</span>
 										<span class="message">
@@ -215,7 +214,7 @@
                     <li><a href="#"><i class="fa fa-user"></i> 我的信息</a></li>
                     <li><a href="#"><i class="fa fa-cog"></i> 账户设置</a></li>
                     <li><a href="#"><i class="fa fa-eye"></i> 私有设置</a></li>
-                    <li><a href="includes/userAction.php?action=logout"><i class="fa fa-power-off"></i> 注销登录</a></li>
+                    <li><a href="includes/userAction.php?action=logout"><i class="fa fa-power-off log-out"></i> 注销登录</a></li>
                 </ul>
             </li>
             <!-- END USER LOGIN DROPDOWN -->
@@ -223,87 +222,5 @@
         <!-- END TOP NAVIGATION MENU -->
     </div>
 
-    <!-- TEAM STATUS -->
-    <div class="container team-status" id="team-status">
-        <div id="scrollbar">
-            <div class="handle">
-            </div>
-        </div>
-        <div id="teamslider">
-            <ul class="team-list">
-                <li class="current">
-                    <a href="javascript:void(0);">
-				  <span class="image">
-					  <img src="img/avatars/avatar3.jpg" alt="" />
-				  </span>
-                        <span class="title">
-					You
-				  </span>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" style="width: 35%">
-                                <span class="sr-only">35% Complete (success)</span>
-                            </div>
-                            <div class="progress-bar progress-bar-warning" style="width: 20%">
-                                <span class="sr-only">20% Complete (warning)</span>
-                            </div>
-                            <div class="progress-bar progress-bar-danger" style="width: 10%">
-                                <span class="sr-only">10% Complete (danger)</span>
-                            </div>
-                        </div>
-                        <span class="status">
-						<div class="field">
-							<span class="badge badge-green">6</span> completed
-							<span class="pull-right fa fa-check"></span>
-						</div>
-						<div class="field">
-							<span class="badge badge-orange">3</span> in-progress
-							<span class="pull-right fa fa-adjust"></span>
-						</div>
-						<div class="field">
-							<span class="badge badge-red">1</span> pending
-							<span class="pull-right fa fa-list-ul"></span>
-						</div>
-				    </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:void(0);">
-				  <span class="image">
-					  <img src="img/avatars/avatar1.jpg" alt="" />
-				  </span>
-                        <span class="title">
-					Max Doe
-				  </span>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" style="width: 15%">
-                                <span class="sr-only">35% Complete (success)</span>
-                            </div>
-                            <div class="progress-bar progress-bar-warning" style="width: 40%">
-                                <span class="sr-only">20% Complete (warning)</span>
-                            </div>
-                            <div class="progress-bar progress-bar-danger" style="width: 20%">
-                                <span class="sr-only">10% Complete (danger)</span>
-                            </div>
-                        </div>
-                        <span class="status">
-						<div class="field">
-							<span class="badge badge-green">2</span> completed
-							<span class="pull-right fa fa-check"></span>
-						</div>
-						<div class="field">
-							<span class="badge badge-orange">8</span> in-progress
-							<span class="pull-right fa fa-adjust"></span>
-						</div>
-						<div class="field">
-							<span class="badge badge-red">4</span> pending
-							<span class="pull-right fa fa-list-ul"></span>
-						</div>
-				    </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- /TEAM STATUS -->
 </header>
 <!--/HEADER -->

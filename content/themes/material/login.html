@@ -170,8 +170,8 @@
 <script src="~$path~~js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
 <!-- BOOTSTRAP -->
 <script src="~$path~~bootstrap-dist/js/bootstrap.min.js"></script>
-
-
+<!-- BLOCK UI -->
+<script type="text/javascript" src="~$path~~js/jQuery-BlockUI/jquery.blockUI.min.js"></script>
 <!-- UNIFORM -->
 <script type="text/javascript" src="~$path~~js/uniform/jquery.uniform.min.js"></script>
 <!-- BACKSTRETCH -->
@@ -190,50 +190,6 @@
         jQuery('.visible').removeClass('visible animated fadeInUp');
         jQuery('#'+id).addClass('visible animated fadeInUp');
     }
-   	$(document).ready(function () {
-        $('#sub').click(function () {
-            $.ajax("includes/userAction.php", {
-                type:'POST',
-                data: {
-                    action:'login',
-                    username:$('#username').val(),
-                    password:$('#password').val()
-                },
-                dataType: "json"
-            }).done(function(data) {
-                if(data.code == "bad"){
-                    alert(data.message);
-				}else {
-                    window.location.href="index.php";
-				}
-            });
-        });
-
-        $('#regbtn').click(function () {
-            $.ajax("includes/userAction.php", {
-                type:'POST',
-                data: {
-                    action:'register',
-                    username_reg:$('#username-reg').val(),
-                    password_reg:$('#password-reg').val(),
-					email:$('#email').val(),
-					uid:$('#userid').val()
-                },
-                dataType: "json"
-            }).done(function(data) {
-                if(data.code == "bad"){
-                    alert(data.message);
-                }else {
-                    window.location.href="index.php";
-                }
-            });
-        });
-
-
-
-
-    });
-
 </script>
 <!-- /JAVASCRIPTS -->
 </body>

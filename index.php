@@ -12,9 +12,10 @@ require_once('includes/smarty.inc.php');//smarty模板配置
 require_once('includes/connect.php');
 require_once('includes/userShell.php');
 
-$result = mysqli_query($con,"SELECT * FROM f_setting");//获取数据
 //ini_set("display_errors", "On");
 //error_reporting(E_ALL | E_STRICT);
+
+$result = mysqli_query($con,"SELECT * FROM f_setting");//获取数据
 while($row = mysqli_fetch_assoc($result)){ 
 	$tit = $row['main_tit'];
 	$theme = $row['theme'];
