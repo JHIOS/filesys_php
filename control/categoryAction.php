@@ -15,92 +15,90 @@ require_once('../includes/userShell.php');
 $action = $_POST['action'];
 switch ($action) {
     case 'add':
-        echo userLogin($_POST['username'],$_POST['password'],$con);
+        echo addCreagory($con);
         break;
     case 'del':
-        echo userLogin($_POST['username'],$_POST['password'],$con);
+        echo delCreagory();
         break;
     case 'fix':
-        echo userLogin($_POST['username'],$_POST['password'],$con);
+        echo fixCreagory();
         break;
     case 'sel':
-        echo userLogin($_POST['username'],$_POST['password'],$con);
+        echo selCreagory();
         break;
     default:
         # code...
         break;
 }
-function userReg($userName,$passWord,$userid,$email,$SQlcon){
-    $userName = str_replace(" ", "", $userName);
-    $passWord = str_replace(" ", "", $passWord);
-    $userid = str_replace(" ", "", $userid);
-    $email = str_replace(" ", "", $email);
 
-    $pattern = "/^([0-9A-Za-z\\-_\\.]+)@([0-9a-z]+\\.[a-z]{2,3}(\\.[a-z]{2})?)$/i";
-    if ( ! preg_match( $pattern, $email ) || (mb_strlen($email,'UTF8')>22) || (mb_strlen($email,'UTF8')<4) ){
-        $result['code']="bad";
-        $result['message']=urlencode("电子邮箱或密码不符合规范");
-        return urldecode(json_encode($result));
-        exit();
-    }
-    $stmt = mysqli_stmt_init($SQlcon);
-    mysqli_stmt_prepare($stmt, 'SELECT id FROM f_user WHERE email=? ');
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt,$uid);
-    $results = mysqli_stmt_fetch($stmt) ;
-    if(! empty($results)){
-        $result['code']="bad";
-        $result['message']=urlencode("此电子邮箱已被注册！");
-        return urldecode(json_encode($result));
-        exit();
-    }
+function addCreagory($con){
 
-    mysqli_stmt_prepare($stmt, 'SELECT id FROM f_user WHERE uid=? ');
-    mysqli_stmt_bind_param($stmt, "s", $userid);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt,$uid);
-    $results = mysqli_stmt_fetch($stmt) ;
-    if(! empty($results)){
-        $result['code']="bad";
-        $result['message']=urlencode("此id已经被绑定！");
-        return urldecode(json_encode($result));
-        exit();
-    }
+    $cname = str_replace(" ", "", $_POST['cname']);
+    $split = str_replace(" ", "", $_POST['split']);
+    $prefix = str_replace(" ", "", $_POST['prefix']);
+    $filednum = str_replace(" ", "", $_POST['filednum']);
+    $filednames = str_replace(" ", "", $_POST['filednames']);
+    $filednames = str_replace("，", ",", $filednames);
 
-    mysqli_stmt_prepare($stmt, 'SELECT id FROM f_user WHERE username=? ');
-    mysqli_stmt_bind_param($stmt, "s", $userName);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt,$uid);
-    $results = mysqli_stmt_fetch($stmt) ;
-    if(! empty($results)){
-        $result['code']="bad";
-        $result['message']=urlencode("此用户名已被注册！");
-        return urldecode(json_encode($result));
+    $prefix2 = str_replace("-", "", $prefix);
+    $prefix2 = str_replace("_", "", $prefix2);
+
+//    $filednames = explode(',',$filednames);
+//    $filednames = json_encode($filednames);
+    $tablename='f_data_'.$prefix2;
+
+    $sql='CREATE TABLE '.$tablename.' (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `fkey` text CHARACTER SET utf8 NOT NULL,';
+
+    for ($i=0;$i<$filednum;$i++){
+        $sql = $sql . "`filed$i` text CHARACTER SET utf8 NOT NULL,
+        ";
+    }
+    $sql = $sql . "  PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;";
+
+    $results = mysqli_query($con, $sql);
+    if (!$results){
+        $message['code'] = "bad";
+        $message['message'] = "增加分类出错 请重试";
+        echo json_encode($message);
         exit();
     }
 
-    $passWord=md5($passWord."sdshare");
-    $timeNow = date('Y-m-d H:i:s');
-    $ukey=date('YmdHis').mt_rand(10001,99999);
-    $sql="INSERT INTO  `f_user` (`username` ,`pwd` ,`uid`,`email`,`ukey`,`regtime`)VALUES (?, '$passWord', '$userid' ,'$email','$ukey','$timeNow');";
-    $stmt = $SQlcon->prepare($sql);
-    $stmt->bind_param('s', $userName);
-    $rest=$stmt->execute();
+    $ckey=createName(8);
+    $sql = "INSERT INTO  `f_category` (`category` ,`split` ,`fieldnum` ,`fieldname` ,`prefix` ,`ckey` ,`ltable`)VALUES 
+            ('$cname', '$split', '$filednum', '$filednames' ,'$prefix' ,?,'$tablename');";
+    if (!$con) {
+        $re = "bad.数据库连接失败";
+    } else {
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param('s', $ckey);
+        $rest = $stmt->execute();
+    }
     if ($rest){
-        $result['code']="ok";
-        $result['message']=urlencode("ok");
-
-        $_SESSION[uid]=$ukey;
-        $_SESSION[user_check]=md5($userName.$passWord."sdshare");
-    }else{
-        $result['code']="bad";
-        $result['message']=urlencode("操作失败 1000");//插入数据库失败
+        $message['code'] = "ok";
+        $message['message'] = "增加分类成功";
+        echo json_encode($message);
     }
-
-    return urldecode(json_encode($result));
 }
 
+function createName($len)
+{
+    $chars_array = array(
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+        "A", "B", "C", "D", "E", "F", "G",
+        "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
+        "S", "T", "U", "V", "W", "X", "Y", "Z",
+    );
+    $charsLen = count($chars_array) - 1;
 
+    $outputstr = "";
+    for ($i=0; $i<$len; $i++)
+    {
+        $outputstr .= $chars_array[mt_rand(0, $charsLen)];
+    }
+    return $outputstr;
+}
 
 ?>

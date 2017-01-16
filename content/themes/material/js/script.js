@@ -626,15 +626,17 @@ var App = function () {
         $('.alert-success').hide();
         //提交分类列表
         $('.subBtn').click(function () {
-            $('.alert-success').show();
             var el = jQuery(this).parents("#form");
             App.blockUI(el);
             $.ajax("control/categoryAction.php", {
                 type:'POST',
                 data: {
                     action:'add',
-                    username:$('#username').val(),
-                    password:$('#password').val()
+                    cname:$('#cname').val(),
+                    split:$('#split').val(),
+                    prefix:$('#prefix').val(),
+                    filednum:$('#filednum').val(),
+                    filednames:$('#filednames').val()
                 },
                 dataType: "json"
             }).done(function(data) {
@@ -642,7 +644,7 @@ var App = function () {
                 if(data.code == "bad"){
                     alert(data.message);
                 }else {
-                    window.location.href="index.php";
+                    $('.alert-success').show();
                 }
             });
         });

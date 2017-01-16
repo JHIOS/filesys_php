@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Shanghai');
 require_once("config.php");
 require_once('includes/function.php');
 require_once('includes/smarty.inc.php');
@@ -16,8 +17,8 @@ while($row = mysqli_fetch_assoc($result)){
     $zzurl = $row['zzurl'];
 }
 
-//ini_set("display_errors", "On");
-//error_reporting(E_ALL | E_STRICT);
+ini_set("display_errors", "On");
+error_reporting(E_ALL | E_STRICT);
 $err[0] = false;
 $err[1] = "";
 
