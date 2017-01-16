@@ -46,15 +46,7 @@ if(file_exists("views/config.json")){
 if($err[0]){  
 	$smarty->template_dir = "content/themes/".$theme;
 	$head='<script type="text/javascript" src="./../includes/js/jquery-1.9.1.min.js"></script>';
-	$smarty->assign("isVisitor", $isVisitor); 
-	$smarty->assign("userinfo", $userInfo); 	
-	$jscode=$tjcode;
-	$smarty->assign("tit", $tit); //应用标题
-	$smarty->assign("zzurl", $url1); 
-	$smarty->assign("tit2", "错误"); //文件名
-	$smarty->assign("head", $head); //应用模板头
-	$smarty->assign("jscode", $jscode); //应用模板头
-	$smarty->assign("message", $err[1]);
+
     $smarty->assign("path",'content/themes/material/');
     $smarty->display("404.html");  // 输出页面
 }else{

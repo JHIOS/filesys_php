@@ -80,6 +80,10 @@ function addCreagory($con){
         $message['code'] = "ok";
         $message['message'] = "增加分类成功";
         echo json_encode($message);
+    }else{
+        $message['code'] = "bad";
+        $message['message'] = "增加分类失败";
+        echo json_encode($message);
     }
 }
 
