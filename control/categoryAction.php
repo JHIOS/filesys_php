@@ -18,7 +18,7 @@ switch ($action) {
         echo addCreagory($con);
         break;
     case 'del':
-        echo delCreagory();
+        echo delCreagory($con);
         break;
     case 'fix':
         echo fixCreagory();
@@ -62,8 +62,7 @@ function addCreagory($con){
     if (!$results){
         $message['code'] = "bad";
         $message['message'] = "增加分类出错 请重试";
-        echo json_encode($message);
-        exit();
+        return json_encode($message);
     }
 
     $ckey=createName(8);
@@ -79,13 +78,42 @@ function addCreagory($con){
     if ($rest){
         $message['code'] = "ok";
         $message['message'] = "增加分类成功";
-        echo json_encode($message);
+        return json_encode($message);
     }else{
         $message['code'] = "bad";
         $message['message'] = "增加分类失败";
-        echo json_encode($message);
+        return json_encode($message);
     }
 }
+
+function delCreagory($con){
+    $ckey=$_POST['ckey'];
+    $sql="select * from f_category where ckey = '$ckey';";
+    $rest=mysqli_query($con,$sql);
+    while ($row=mysqli_fetch_assoc($rest)){
+        $ltable=$row['ltable'];
+    }
+    $sql="DROP TABLE IF EXISTS $ltable;";
+    $rest=mysqli_query($con,$sql);
+    if (!$rest){
+        $message['code'] = "bad";
+        $message['message'] = "删除分类失败 1001";
+        return json_encode($message);
+    }
+    $sql = "delete from f_category where ckey = '$ckey';";
+    $rest = mysqli_query($con,$sql);
+    if ($rest){
+        $message['code'] = "OK";
+        $message['message'] = "删除分类成功";
+        return json_encode($message);
+    }else{
+        $message['code'] = "bad";
+        $message['message'] = "删除分类失败 1002";
+        return json_encode($message);
+    }
+}
+
+
 
 function createName($len)
 {

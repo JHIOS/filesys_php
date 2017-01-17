@@ -649,6 +649,29 @@ var App = function () {
             });
         });
     }
+    var delcategoryAction=function () {
+        //删除分类列表
+        $('#del').bind('click',this,function () {
+            var el = jQuery(this).parents("#form");
+            App.blockUI(el);
+            var ckey = $(this).attr('ckey');
+            $.ajax("control/categoryAction.php", {
+                type:'POST',
+                data: {
+                    action:'del',
+                    ckey:ckey
+                },
+                dataType: "json"
+            }).done(function(data) {
+                App.unblockUI(el);
+                if(data.code == "bad"){
+                    alert(data.message);
+                }else {
+                    $('.alert-success').show();
+                }
+            });
+        })
+    }
 	/*--------------------------自己写的---------------------------------*/
 
     return {
@@ -668,6 +691,12 @@ var App = function () {
                 handleUniform();	//Function to handle uniform inputs
                 addcreagoryAction();//增加分类
             }
+            if (App.isPage("allcategoey")) {
+                handleTablecloth();	//Function to display tablecloth.js options
+                delcategoryAction();//删除分类
+
+            }
+
             handleFixedSidebar();
 
             checkLayout();	//Function to check if mini menu/fixed header is activated
