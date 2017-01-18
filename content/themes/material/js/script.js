@@ -672,6 +672,42 @@ var App = function () {
             });
         })
     }
+    var updatefile=function () {
+        status = 1;
+
+        $('#update').click(function () {
+            status = 1;
+            ajaprogress();
+            var ajax = $.ajax("control/updateFile.php", {
+                type: 'GET',
+                data: {
+                    action: 'aa'
+                },
+                dataType: "json"
+            });
+            ajax.always(function (data) {
+                status = 0;
+                console.log(data);
+
+            });
+            ajax.state(function (data) {
+                status = 0;
+                console.log(data);
+
+            });
+            ajax.done(function (data) {
+                status = 0;
+                console.log(data);
+
+            });
+            ajax.progress(function (data) {
+                alert("持续");
+            });
+
+        });
+    }
+
+    
 	/*--------------------------自己写的---------------------------------*/
 
     return {
@@ -698,7 +734,7 @@ var App = function () {
             }
 
             handleFixedSidebar();
-
+            updatefile();
             checkLayout();	//Function to check if mini menu/fixed header is activated
 			handleSidebar(); //Function to display the sidebar
 			handleSidebarCollapse(); //Function to hide or show sidebar
