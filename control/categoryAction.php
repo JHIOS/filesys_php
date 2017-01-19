@@ -52,7 +52,7 @@ function addCreagory($con){
     `fkey` text CHARACTER SET utf8 NOT NULL,';
 
     for ($i=0;$i<$filednum;$i++){
-        $sql = $sql . "`filed$i` text CHARACTER SET utf8 NOT NULL,
+        $sql = $sql . "`field$i` text CHARACTER SET utf8 NOT NULL,
         ";
     }
     $sql = $sql . "  PRIMARY KEY (`id`)

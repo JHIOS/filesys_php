@@ -12,29 +12,77 @@ require_once('../includes/userShell.php');
 
 //ini_set("display_errors", "On");
 //error_reporting(E_ALL | E_STRICT);
-
+$ukey=$userInfo['ukey'];
 $user_dir="".$userinfo['uid'];
-
+$updatetime=date('Y-m-d H:i:s');
 
 $result=mysqli_query($con,"select * from f_category");
 $clist=array();
-while ($row=mysqli_fetch_row($result)){
+while ($row=mysqli_fetch_assoc($result)){
     $clist[]=$row;
 }
 
+$start=getCurrentTime();
+foreach ($clist as $v){
+    $ltable=$v['ltable'];
+    $sql = "delete from $ltable WHERE fkey IN (SELECT fkey from f_file WHERE ukey = '$ukey');";
 
-
-$splitChar = '----';//竖线
-$file = 'yys-006.txt';
-$fields = array('filed0','filed1');
-$table = 'f_data_yys';
-$fkey=createName(8);
-$result = loadTxtDataIntoDatabase($splitChar,$file,$table,$con,$fields,$fkey);
-if (array_shift($result)){
-    echo json_encode("成功");
-}else {
-    echo json_encode("成功");
+    $result = mysqli_query($con,$sql);
 }
+$end=getCurrentTime();
+echo $end-$start;
+
+$dirpath="/Users/jianghao/server/100021";
+$files=scandir($dirpath);
+
+$start=getCurrentTime();
+foreach ($files as $filename){
+    if ($filename=="."||$filename=="..")continue;
+    $filepre=explode("-",$filename);
+
+    foreach ($clist as $v){
+        $isfind=false;
+        if ($v['prefix']==$filepre[0]){
+            $isfind=true;
+            $category=$v;
+            break;
+        }
+    }
+    if ($isfind){
+        $splitChar = $category['split'];//竖线
+        $file = $dirpath."/".$filename;
+        $fields = array();
+        for ($i=0;$i<$category['fieldnum'];$i++){
+            $fields[]="field".$i;
+        }
+        $table = $category['ltable'];
+        $fkey=createName(10);
+        $result = loadTxtDataIntoDatabase($splitChar,$file,$table,$con,$fields,$fkey);
+//        if (array_shift($result)){
+//            echo $filename."成功<br>";
+//        }else {
+//            echo $filename."失败\n";
+//        }
+        $ckey=$category['ckey'];
+        $status=array_shift($result);
+
+        $sql = "INSERT INTO  `f_file` (`filename` ,`fkey` ,`ckey`,`ukey`,`updatetime`,`status`) VALUES ('$filename', '$fkey', '$ckey' ,'$ukey','$updatetime','$status')";
+        $result=mysqli_query($con,$sql);
+
+    }
+
+}
+$end=getCurrentTime();
+echo "查询时间：".$end-$start;
+
+
+
+function getCurrentTime ()  {
+    list ($msec, $sec) = explode(" ", microtime());
+    return (float)$msec + (float)$sec;
+}
+
+
 
 
 
@@ -68,87 +116,6 @@ function loadTxtDataIntoDatabase($splitChar,$file,$table,$conn,$fields=array(),$
 
 
 
-function addCreagory($con){
-
-    $cname = str_replace(" ", "", $_POST['cname']);
-    $split = str_replace(" ", "", $_POST['split']);
-    $prefix = str_replace(" ", "", $_POST['prefix']);
-    $filednum = str_replace(" ", "", $_POST['filednum']);
-    $filednames = str_replace(" ", "", $_POST['filednames']);
-    $filednames = str_replace("，", ",", $filednames);
-
-    $prefix2 = str_replace("-", "", $prefix);
-    $prefix2 = str_replace("_", "", $prefix2);
-
-//    $filednames = explode(',',$filednames);
-//    $filednames = json_encode($filednames);
-    $tablename='f_data_'.$prefix2;
-
-    $sql='CREATE TABLE '.$tablename.' (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `fkey` text CHARACTER SET utf8 NOT NULL,';
-
-    for ($i=0;$i<$filednum;$i++){
-        $sql = $sql . "`filed$i` text CHARACTER SET utf8 NOT NULL,
-        ";
-    }
-    $sql = $sql . "  PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;";
-
-    $results = mysqli_query($con, $sql);
-    if (!$results){
-        $message['code'] = "bad";
-        $message['message'] = "增加分类出错 请重试";
-        return json_encode($message);
-    }
-
-    $ckey=createName(8);
-    $sql = "INSERT INTO  `f_category` (`category` ,`split` ,`fieldnum` ,`fieldname` ,`prefix` ,`ckey` ,`ltable`)VALUES 
-            ('$cname', '$split', '$filednum', '$filednames' ,'$prefix' ,?,'$tablename');";
-    if (!$con) {
-        $re = "bad.数据库连接失败";
-    } else {
-        $stmt = $con->prepare($sql);
-        $stmt->bind_param('s', $ckey);
-        $rest = $stmt->execute();
-    }
-    if ($rest){
-        $message['code'] = "ok";
-        $message['message'] = "增加分类成功";
-        return json_encode($message);
-    }else{
-        $message['code'] = "bad";
-        $message['message'] = "增加分类失败";
-        return json_encode($message);
-    }
-}
-
-function delCreagory($con){
-    $ckey=$_POST['ckey'];
-    $sql="select * from f_category where ckey = '$ckey';";
-    $rest=mysqli_query($con,$sql);
-    while ($row=mysqli_fetch_assoc($rest)){
-        $ltable=$row['ltable'];
-    }
-    $sql="DROP TABLE IF EXISTS $ltable;";
-    $rest=mysqli_query($con,$sql);
-    if (!$rest){
-        $message['code'] = "bad";
-        $message['message'] = "删除分类失败 1001";
-        return json_encode($message);
-    }
-    $sql = "delete from f_category where ckey = '$ckey';";
-    $rest = mysqli_query($con,$sql);
-    if ($rest){
-        $message['code'] = "OK";
-        $message['message'] = "删除分类成功";
-        return json_encode($message);
-    }else{
-        $message['code'] = "bad";
-        $message['message'] = "删除分类失败 1002";
-        return json_encode($message);
-    }
-}
 
 
 
