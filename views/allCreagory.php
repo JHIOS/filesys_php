@@ -13,6 +13,7 @@ while($row = mysqli_fetch_assoc($result)){
     $categoryOne[]=$row;
 }
 
+setcookie("category",json_encode($categoryOne));
 
 $result = mysqli_query($con,"SELECT * FROM f_setting");//获取数据
 while($row = mysqli_fetch_assoc($result)){

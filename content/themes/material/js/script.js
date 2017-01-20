@@ -673,38 +673,33 @@ var App = function () {
         })
     }
     var updatefile=function () {
-        status = 1;
 
         $('#update').click(function () {
-            status = 1;
-            ajaprogress();
-            var ajax = $.ajax("control/updateFile.php", {
+
+            $.ajax("control/updateFile.php", {
                 type: 'GET',
                 data: {
                     action: 'aa'
                 },
                 dataType: "json"
-            });
-            ajax.always(function (data) {
-                status = 0;
-                console.log(data);
-
-            });
-            ajax.state(function (data) {
-                status = 0;
-                console.log(data);
-
-            });
-            ajax.done(function (data) {
-                status = 0;
-                console.log(data);
-
-            });
-            ajax.progress(function (data) {
-                alert("持续");
+            }).done(function (data) {
+                alert("更新成功");
             });
 
         });
+    }
+    
+    var showCategory=function () {
+
+        var category = $.cookie('category');
+        category = eval(category);
+        var chtml='';
+        for (var i=0;i<category.length;i++){
+            chtml=chtml+'<li><a class="" href="pages.php?id=addCreagory"><span class="sub-menu-text">'+category[i]['category']+'</span></a></li>';
+        }
+
+        
+        $('#category').children('.sub').html(chtml);
     }
 
     
@@ -732,7 +727,8 @@ var App = function () {
                 delcategoryAction();//删除分类
 
             }
-
+            
+            showCategory();
             handleFixedSidebar();
             updatefile();
             checkLayout();	//Function to check if mini menu/fixed header is activated

@@ -14,6 +14,9 @@ require_once('../includes/userShell.php');
 //error_reporting(E_ALL | E_STRICT);
 $ukey=$userInfo['ukey'];
 $user_dir="".$userinfo['uid'];
+
+$dirpath="/Users/jianghao/server/100021";
+
 $updatetime=date('Y-m-d H:i:s');
 
 $result=mysqli_query($con,"select * from f_category");
@@ -22,17 +25,25 @@ while ($row=mysqli_fetch_assoc($result)){
     $clist[]=$row;
 }
 
-$start=getCurrentTime();
-foreach ($clist as $v){
-    $ltable=$v['ltable'];
-    $sql = "delete from $ltable WHERE fkey IN (SELECT fkey from f_file WHERE ukey = '$ukey');";
-
-    $result = mysqli_query($con,$sql);
+$sql="select fkey,f_file.ckey,f_category.ltable from f_file LEFT JOIN f_category ON f_file.ckey=f_category.ckey where ukey='$ukey';";
+$result = mysqli_query($con,$sql);
+$delrest=array();
+while ($row = mysqli_fetch_assoc($result)){
+    $delrest[]=$row;
 }
-$end=getCurrentTime();
-echo $end-$start;
 
-$dirpath="/Users/jianghao/server/100021";
+foreach ($delrest as $item) {
+
+    $ltable=$item['ltable'];
+    $fkey=$item['fkey'];
+    $sql="delete from $ltable where fkey='$fkey';";
+    $result=mysqli_query($con,$sql);
+
+}
+$sql="delete from f_file where ukey='$ukey';";
+$result=mysqli_query($con,$sql);
+
+
 $files=scandir($dirpath);
 
 $start=getCurrentTime();
@@ -58,11 +69,7 @@ foreach ($files as $filename){
         $table = $category['ltable'];
         $fkey=createName(10);
         $result = loadTxtDataIntoDatabase($splitChar,$file,$table,$con,$fields,$fkey);
-//        if (array_shift($result)){
-//            echo $filename."成功<br>";
-//        }else {
-//            echo $filename."失败\n";
-//        }
+
         $ckey=$category['ckey'];
         $status=array_shift($result);
 
@@ -70,10 +77,9 @@ foreach ($files as $filename){
         $result=mysqli_query($con,$sql);
 
     }
-
 }
-$end=getCurrentTime();
-echo "查询时间：".$end-$start;
+
+echo json_encode('成功');
 
 
 
@@ -81,9 +87,6 @@ function getCurrentTime ()  {
     list ($msec, $sec) = explode(" ", microtime());
     return (float)$msec + (float)$sec;
 }
-
-
-
 
 
 
@@ -113,9 +116,6 @@ function loadTxtDataIntoDatabase($splitChar,$file,$table,$conn,$fields=array(),$
         return array(false,mysqli_error($conn),mysqli_errno($conn));
     }
 }
-
-
-
 
 
 
