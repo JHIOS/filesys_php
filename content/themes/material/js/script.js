@@ -675,14 +675,13 @@ var App = function () {
     var updatefile=function () {
 
         $('#update').click(function () {
-
+            var el = $('#main-content');
+            App.blockUI(el);
             $.ajax("control/updateFile.php", {
-                type: 'GET',
-                data: {
-                    action: 'aa'
-                },
+                type: 'POST',
                 dataType: "json"
             }).done(function (data) {
+                App.unblockUI(el);
                 alert("更新成功");
             });
 
@@ -692,10 +691,11 @@ var App = function () {
     var showCategory=function () {
 
         var category = $.cookie('category');
+        if(!category||category=='null')return;
         category = eval(category);
         var chtml='';
-        for (var i=0;i<category.length;i++){
-            chtml=chtml+'<li><a class="" href="pages.php?id=addCreagory"><span class="sub-menu-text">'+category[i]['category']+'</span></a></li>';
+        for (var i=0;i<category.length ;i++){
+            chtml=chtml+'<li><a class="" href="pages.php?id=filelist&ckey='+category[i]['ckey']+'"><span class="sub-menu-text">'+category[i]['category']+'</span></a></li>';
         }
 
         
