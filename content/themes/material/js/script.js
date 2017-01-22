@@ -730,7 +730,7 @@ var App = function () {
         init: function () {
 
             if (App.isPage("index")) {
-                handleTablecloth();	//Function to display tablecloth.js options
+                // handleTablecloth();	//Function to display tablecloth.js options
             }
             if (App.isPage("login_bg")) {
                 handleUniform();	//Function to handle uniform inputs
