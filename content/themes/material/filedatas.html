@@ -17,7 +17,7 @@
     <!-- TABLE CLOTH -->
     <link rel="stylesheet" type="text/css" href="~$path~~js/tablecloth/css/tablecloth.min.css" />
     <!-- FONTS -->
-    <link href='~$path~~css/usesocss.css' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
 ~include file="head.html"~~
@@ -25,25 +25,7 @@
 <section id="page">
     ~include file="left.html"~~
     <div id="main-content">
-        <!-- SAMPLE BOX CONFIGURATION MODAL FORM-->
-        <div class="modal fade" id="box-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Box Settings</h4>
-                    </div>
-                    <div class="modal-body">
-                        Here goes box setting content.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
+
         <div class="container">
             <div class="row">
                 <div id="content" class="col-lg-12">
@@ -80,22 +62,14 @@
                                 <div class="box-title">
                                     <h4><i class="fa fa-hand-o-up"></i>~$filename~~</h4>
                                     <div class="tools">
-                                        <a href="#box-config" data-toggle="modal" class="config">
-                                            <i class="fa fa-cog"></i>
-                                        </a>
-                                        <a href="javascript:;" class="reload">
-                                            <i class="fa fa-refresh"></i>
-                                        </a>
-                                        <a href="javascript:;" class="collapse">
-                                            <i class="fa fa-chevron-up"></i>
-                                        </a>
-                                        <a href="javascript:;" class="remove">
-                                            <i class="fa fa-times"></i>
+
+                                        <a href="javascript:;" class="explort">
+                                            <i class="fa fa-upload">导出TXT</i>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="box-body">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="table-id">
                                         <thead>
 
                                         <tr>
@@ -156,13 +130,20 @@
 <script type="text/javascript" src="~$path~~js/tablecloth/js/jquery.tablesorter.min.js"></script>
 <!-- COOKIE -->
 <script type="text/javascript" src="~$path~~js/jQuery-Cookie/jquery.cookie.min.js"></script>
+<!-- 表格导出 排序 -->
+<script type="text/javascript" src="~$path~~js/tableabout/tableExporter.js"></script>
+<script type="text/javascript" src="~$path~~js/tableabout/tablesort.min.js"></script>
+<script type="text/javascript" src="~$path~~js/tableabout/tablesort.number.js"></script>
 
 <!-- CUSTOM SCRIPT -->
 <script src="~$path~~js/script.js"></script>
 <script>
     var path = '~$path~~';
+    var fieldnum='~$fieldnum~~';
+    var split='~$split~~'
     jQuery(document).ready(function() {
-        App.setPage("allcategoey");  //Set current page
+
+        App.setPage("filedatas");  //Set current page
         App.init(); //Initialise plugins and elements
     });
 </script>

@@ -675,14 +675,15 @@ var App = function () {
     var updatefile=function () {
 
         $('#update').click(function () {
-            var el = $('#main-content');
+            var el = $('#update-data');
             App.blockUI(el);
             $.ajax("control/updateFile.php", {
                 type: 'POST',
                 dataType: "json"
             }).done(function (data) {
                 App.unblockUI(el);
-                alert("更新成功");
+
+                alert(data);
             });
 
         });
@@ -702,7 +703,27 @@ var App = function () {
         $('#category').children('.sub').html(chtml);
     }
 
-    
+
+
+    var filedatas = function () {
+
+        new Tablesort(document.getElementById('table-id'));
+        $('.explort').click(function () {
+            var cols='';
+            for(var i=2;i<parseInt(fieldnum)+2;i++){
+                cols=cols+i+','
+            }
+            cols=cols.substring(0,cols.length-1);
+            $('.table').tableExport({
+                filename: 'file_%YY%_%MM%_%DD%-%hh%_%mm%',
+                format: 'txt',
+                cols: cols,
+                column_delimiter:split
+            });
+        });
+
+    }
+
 	/*--------------------------自己写的---------------------------------*/
 
     return {
@@ -725,7 +746,9 @@ var App = function () {
             if (App.isPage("allcategoey")) {
                 handleTablecloth();	//Function to display tablecloth.js options
                 delcategoryAction();//删除分类
-
+            }
+            if (App.isPage("filedatas")){
+                filedatas();
             }
             
             showCategory();

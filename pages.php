@@ -32,6 +32,11 @@ if(file_exists("views/config.json")){
 		if($value["id"] == $id){
 			$idCheck[0] = false;
 			$idCheck[1] = $value["file"];
+
+            $smarty->template_dir = "content/themes/".$theme;
+            $smarty->assign("path",'content/themes/'.$theme.'/');
+            $smarty->assign("userinfo",$userInfo);
+
 			require_once("views/".$idCheck[1].".php");
 			exit();
 		}else{

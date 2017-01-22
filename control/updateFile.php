@@ -79,7 +79,7 @@ foreach ($files as $filename){
     }
 }
 
-echo json_encode('成功');
+echo json_encode('更新完成');
 
 
 

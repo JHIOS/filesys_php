@@ -1,5 +1,9 @@
 <!-- HEADER -->
 <header class="navbar clearfix navbar-fixed-top" id="header">
+    <!-- 更新提示-->
+
+
+    <!-- /更新提示-->
     <div class="container">
         <div class="navbar-brand">
             <!-- COMPANY LOGO -->
@@ -45,10 +49,12 @@
             </li>
         </ul>
         <!-- /NAVBAR LEFT -->
+
+
         <!-- BEGIN TOP NAVIGATION MENU -->
         <ul class="nav navbar-nav pull-right">
             <li class="dropdown" id="header-update">
-                <a id="update" class="dropdown-toggle">
+                <a href="#update-data" class="dropdown-toggle" data-toggle="modal" >
                     <i class="fa fa-refresh"> 更新数据</i>
                 </a>
             </li>
@@ -106,4 +112,21 @@
     </div>
 
 </header>
+<div class="modal fade" id="update-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">更新数据</h4>
+            </div>
+            <div class="modal-body">
+                确认更新数据？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="update" class="btn btn-primary">更新</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!--/HEADER -->

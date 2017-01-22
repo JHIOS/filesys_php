@@ -22,20 +22,11 @@ while($row = mysqli_fetch_assoc($result)){
 }
 
 
-$result = mysqli_query($con,"SELECT * FROM f_setting");//获取数据
-while($row = mysqli_fetch_assoc($result)){
-    $tit = $row['main_tit'];
-    $theme = $row['theme'];
-    $zzurl = $row['zzurl'];
-}
 
-$smarty->template_dir = "content/themes/".$theme;
-
-$smarty->assign("userinfo",$userInfo);
 $smarty->assign("filedetail",$filedetail);
 $smarty->assign("filetit",$filetit);
 $smarty->assign("cname",$category);
-$smarty->assign("path",'content/themes/material/');
+
 $smarty->display("filelist.html");
 
 ?>
