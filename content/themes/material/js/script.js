@@ -30,7 +30,8 @@ var App = function () {
 	 /*-----------------------------------------------------------------------------------*/
     var handleBackstretch = function () {
         $.backstretch([
-            path+"img/login/1.jpg"
+            path+"img/login/1.webp",
+            path+"img/login/2.webp"
         ], {duration: 3000, fade: 750});
     }
 	/*-----------------------------------------------------------------------------------*/
