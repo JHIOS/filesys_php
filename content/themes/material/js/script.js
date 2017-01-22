@@ -31,9 +31,6 @@ var App = function () {
     var handleBackstretch = function () {
         $.backstretch([
             path+"img/login/1.jpg"
-            , path+"img/login/2.jpg"
-            , path+"img/login/3.jpg"
-            , path+"img/login/4.jpg"
         ], {duration: 3000, fade: 750});
     }
 	/*-----------------------------------------------------------------------------------*/
@@ -675,7 +672,7 @@ var App = function () {
     var updatefile=function () {
 
         $('#update').click(function () {
-            var el = $('#update-data');
+            var el = $('#main-content');
             App.blockUI(el);
             $.ajax("control/updateFile.php", {
                 type: 'POST',

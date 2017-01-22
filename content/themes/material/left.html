@@ -12,10 +12,12 @@
                 </a>
             </li>
             <li class="has-sub">
+                ~if $userinfo['username']=='admin'~~
                 <a href="javascript:;" class="">
                     <i class="fa fa-indent fa-fw"></i> <span class="menu-text">分类管理</span>
                     <span class="arrow"></span>
                 </a>
+                ~/if~~
                 <ul class="sub">
                     <li><a class="" href="pages.php?id=addCreagory"><span class="sub-menu-text">增加分类</span></a></li>
                     <li><a class="" href="pages.php?id=allCreagory"><span class="sub-menu-text">查看分类</span></a></li>
@@ -29,6 +31,11 @@
                 <ul class="sub">
 
                 </ul>
+            </li>
+            <li class="has-sub">
+                <a href="javascript:;" class="">
+                    <i class="fa fa-search fa-fw"></i> <span class="menu-text">搜索模式</span>
+                </a>
             </li>
         </ul>
         <!-- /SIDEBAR MENU -->
