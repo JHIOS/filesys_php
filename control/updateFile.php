@@ -12,10 +12,16 @@ require_once('../includes/userShell.php');
 
 //ini_set("display_errors", "On");
 //error_reporting(E_ALL | E_STRICT);
-$ukey=$userInfo['ukey'];
-$user_dir="".$userinfo['uid'];
+$result = mysqli_query($con,"SELECT * FROM f_setting");//获取数据
+while($row = mysqli_fetch_assoc($result)){
+    $dir = $row['dir'];
+}
 
-$dirpath="/Users/jianghao/server/100021";
+
+$ukey=$userInfo['ukey'];
+$user_dir=$userInfo['uid'];
+
+$dirpath=$dir.$user_dir;
 
 $updatetime=date('Y-m-d H:i:s');
 

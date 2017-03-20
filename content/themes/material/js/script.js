@@ -30,10 +30,8 @@ var App = function () {
 	 /*-----------------------------------------------------------------------------------*/
     var handleBackstretch = function () {
         $.backstretch([
-            path+"img/login/1.jpg"
-            , path+"img/login/2.jpg"
-            , path+"img/login/3.jpg"
-            , path+"img/login/4.jpg"
+            path+"img/login/1.webp",
+            path+"img/login/2.webp"
         ], {duration: 3000, fade: 750});
     }
 	/*-----------------------------------------------------------------------------------*/
@@ -675,7 +673,7 @@ var App = function () {
     var updatefile=function () {
 
         $('#update').click(function () {
-            var el = $('#update-data');
+            var el = $('#main-content');
             App.blockUI(el);
             $.ajax("control/updateFile.php", {
                 type: 'POST',
@@ -732,7 +730,7 @@ var App = function () {
         init: function () {
 
             if (App.isPage("index")) {
-                handleTablecloth();	//Function to display tablecloth.js options
+                // handleTablecloth();	//Function to display tablecloth.js options
             }
             if (App.isPage("login_bg")) {
                 handleUniform();	//Function to handle uniform inputs

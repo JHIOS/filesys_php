@@ -120,7 +120,14 @@ function userLogin($userName,$passWord,$SQlcon){
 			$result['message']=urlencode("登录成功");
 			$_SESSION[uid]=$uid;
     		$_SESSION[user_check]=md5($um.$pwd."sdshare");
- 		}else{
+
+
+            $result = mysqli_query($SQlcon,"SELECT * FROM f_category");//获取数据
+            while($row = mysqli_fetch_assoc($result)){
+                $categoryOne[]=$row;
+            }
+            setcookie("category",json_encode($categoryOne));
+
  		}
     }
  	return urldecode(json_encode($result));

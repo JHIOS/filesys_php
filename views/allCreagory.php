@@ -13,9 +13,6 @@ while($row = mysqli_fetch_assoc($result)){
     $categoryOne[]=$row;
 }
 
-setcookie("category",json_encode($categoryOne));
-
-
 
 
 $smarty->assign("category",$categoryOne);
